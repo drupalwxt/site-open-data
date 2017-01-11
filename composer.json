@@ -31,7 +31,6 @@
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
         "drush/drush": "8.*@stable",
-        "drupalwxt/wxt": "dev-8.x-2.x",
         "drupalwxt/wxt-scripts": "dev-master",
         "drupal/chosen": "2.1",
         "drupal/csv_serialization": "1.0",
@@ -46,7 +45,8 @@
         "drupal/views_field_view": "1.0-beta2",
         "drupal/views_templates": "1.0-alpha1",
         "drupal/xls_serialization": "1.0-alpha2",
-        "harvesthq/chosen": "1.5.1"
+        "harvesthq/chosen": "1.5.1",
+        "open-data/od": "dev-8.x-2.x"
     },
     "repositories": [
         {

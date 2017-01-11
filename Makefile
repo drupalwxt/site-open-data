@@ -32,7 +32,7 @@ open_data:
                --build-arg HTTPS_PROXY=$$HTTP_PROXY .
 
 drupal_install:
-	docker exec wxt_web bash /var/www/scripts/wxt/main.sh wxt-first-run
+	docker exec wxt_web bash /var/www/scripts/wxt/main.sh wxt-first-run od
 
 drupal_migrate:
 	./docker/bin/drush mi --group=od
