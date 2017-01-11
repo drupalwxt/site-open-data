@@ -34,6 +34,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose --version
   # Build out the Drupal WxT infrastructure.
+  - make build
   - docker-compose -f docker-compose-ci.yml up -d
   - docker ps -a
   - sleep 10
