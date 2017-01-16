@@ -32,7 +32,7 @@
         "cweagans/composer-patches": "^1.6.0",
         "drush/drush": "8.*@stable",
         "drupalwxt/wxt": "dev-8.x-2.x",
-        "drupalwxt/wxt-scripts": "dev-master",
+        "drupalwxt/drupal-scripts": "dev-master",
         "drupal/chosen": "2.1",
         "drupal/csv_serialization": "1.0",
         "drupal/facets": "1.0-alpha6",
@@ -251,7 +251,7 @@
                 "type:drupal-theme"
             ],
             "scripts/{$name}": [
-                "drupalwxt/wxt-scripts"
+                "drupalwxt/drupal-scripts"
             ],
             "drush/contrib/{$name}": [
                 "type:drupal-drush"

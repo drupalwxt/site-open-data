@@ -32,10 +32,10 @@ open_data:
                --build-arg HTTPS_PROXY=$$HTTP_PROXY .
 
 drupal_install:
-	docker exec wxt_web bash /var/www/scripts/wxt/main.sh wxt-first-run od
+	docker exec wxt_web bash /var/www/scripts/drupal/main.sh drupal-first-run od
 
 drupal_migrate:
-	./docker/bin/drush mi --group=od
+	docker exec wxt_web bash /var/www/scripts/drupal/main.sh drupal-migrate od
 
 drush_archive:
 	./docker/bin/drush archive-dump --destination="/var/www/files_private/wxt$$(date +%Y%m%d_%H%M%S).tgz" \
