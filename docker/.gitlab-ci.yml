@@ -2,7 +2,7 @@ stages:
   - build
 
 variables:
-  PROJECT_NAME: drupalwxt/site-wxt
+  PROJECT_NAME: drupalwxt/site-open-data
 
 image: drupalwxt/gitlab-ci
 
