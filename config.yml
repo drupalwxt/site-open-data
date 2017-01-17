@@ -1,0 +1,4 @@
+docker:
+  site: siteopendata_web
+  volume: wxt_web
+  network: siteopendata_default
