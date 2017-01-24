@@ -1,0 +1,5 @@
+docker:
+  site: siteopendata_web
+  volume: siteopendata_web
+  network: siteopendata_default
+  behat_path: profiles/wxt/modules/custom/wxt_test/tests

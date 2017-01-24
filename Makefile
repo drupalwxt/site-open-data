@@ -2,7 +2,7 @@ NAME := open-data/site-open-data
 VERSION := $(or $(VERSION),$(VERSION),'latest')
 PLATFORM := $(shell uname -s)
 
-all: open_data
+all: base
 
 build: all
 
@@ -22,7 +22,7 @@ drupal_cs:
 	cp docker/conf/phpcs.xml html/core/phpcs.xml
 	cp docker/conf/phpunit.xml html/core/phpunit.xml
 
-open_data:
+base:
 	docker build -f docker/Dockerfile \
                -t $(NAME):$(VERSION) \
                --no-cache \
@@ -32,14 +32,14 @@ open_data:
                --build-arg HTTPS_PROXY=$$HTTP_PROXY .
 
 drupal_install:
-	docker exec wxt_web bash /var/www/scripts/drupal/main.sh drupal-first-run od
+	docker exec siteopendata_web bash /var/www/docker/bin/cli drupal-first-run od
 
 drupal_migrate:
-	docker exec wxt_web bash /var/www/scripts/drupal/main.sh drupal-migrate od
+	docker exec siteopendata_web bash /var/www/docker/bin/cli drupal-migrate wxt
 
 drush_archive:
-	./docker/bin/drush archive-dump --destination="/var/www/files_private/wxt$$(date +%Y%m%d_%H%M%S).tgz" \
-                                  --generator="Drupal WxT"
+	./docker/bin/drush archive-dump --destination="/var/www/files_private/drupal$$(date +%Y%m%d_%H%M%S).tgz" \
+                                  --generator="Drupal"
 
 env:
 	eval $$(docker-machine env default)
@@ -86,7 +86,7 @@ up:
 	eval $$(docker-machine env default)
 	docker-compose up -d
 
-update: open_data
+update: base
 	git pull origin 8.x
 	composer update
 	docker-compose build --no-cache
@@ -102,6 +102,7 @@ tag_latest:
 
 .PHONY: \
 	all \
+	base \
 	behat \
 	build \
 	clean \
@@ -110,7 +111,6 @@ tag_latest:
 	drupal_migrate \
 	drush_archive \
 	env \
-	open_data \
 	lint \
 	list \
 	phpcs \

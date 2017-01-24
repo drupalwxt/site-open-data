@@ -59,7 +59,7 @@ deploy_release:
   stage: deploy
   script:
     - composer install --prefer-dist --no-interaction
-    - ./vendor/bin/dep deploy develop
+    - ./vendor/bin/dep --file=./docker/deploy.php develop
   dependencies:
     - build_job
   only:

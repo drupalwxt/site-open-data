@@ -31,7 +31,7 @@
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
         "drush/drush": "8.*@stable",
-        "drupalwxt/drupal-scripts": "dev-master",
+        "drupalwxt/drupal-scaffold-docker": "dev-master",
         "drupal/chosen": "2.1",
         "drupal/csv_serialization": "1.0",
         "drupal/facets": "1.0-alpha6",
@@ -195,6 +195,7 @@
     ],
     "scripts": {
       "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+      "drupal-scaffold-docker": "DrupalComposer\\DrupalScaffoldDocker\\Plugin::scaffold",
       "pre-install-cmd": [
           "DrupalWxT\\WxT\\ScriptHandler::checkComposerVersion"
       ],
@@ -203,10 +204,12 @@
       ],
       "post-install-cmd": [
           "@composer drupal-scaffold",
+          "@composer drupal-scaffold-docker",
           "DrupalWxT\\WxT\\ScriptHandler::deployLibraries"
       ],
       "post-update-cmd": [
           "@composer drupal-scaffold",
+          "@composer drupal-scaffold-docker",
           "DrupalWxT\\WxT\\ScriptHandler::deployLibraries"
       ]
     },
@@ -244,9 +247,6 @@
             ],
             "html/themes/contrib/{$name}": [
                 "type:drupal-theme"
-            ],
-            "scripts/{$name}": [
-                "drupalwxt/drupal-scripts"
             ],
             "drush/contrib/{$name}": [
                 "type:drupal-drush"
