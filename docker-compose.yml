@@ -119,30 +119,22 @@ services:
       - '8025:8025'
     container_name: siteopendata_mailhog
 
-#  solr:
-#    image: solr:6.1-alpine
-#    hostname: solr
-#    ports:
-#      - "8983:8983"
-#      - "10616:10616"
-#    container_name: siteopendata_solr
-
-#  vault:
-#    image: vault:0.6
-#    hostname: vault
-#    environment:
-#      - 'VAULT_LOCAL_CONFIG={"backend": {"file": {"path": "/vault/file"}}}'
-#    ports:
-#      - "8200:8200"
-#    volumes:
-#      - vault_data:/vault/file
-#    cap_add:
-#      - IPC_LOCK
-#    mem_limit: 250MB
-#    memswap_limit: -1
-#    command: 'server'
-#    container_name: siteopendata_vault
+  solr:
+    image: solr:5-alpine
+    hostname: solr
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./docker/conf/solr/drupal:/opt/solr/server/solr/configsets/drupal/conf
+      - ./files_private/mycores:/opt/solr/server/solr/mycores
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-create
+      - -c
+      - drupal
+      - -d
+      - /opt/solr/server/solr/configsets/drupal
+    container_name: siteopendata_solr
 
 volumes:
   db_data:
-#  vault_data:
