@@ -7,8 +7,8 @@ all: base
 build: all
 
 behat:
-	./docker/bin/behat -c behat.common.yml --colors \
-                                         --tags '~@diff'
+	./docker/bin/behat -c behat.yml --colors \
+                                  --tags '~@diff'
 
 clean:
 	rm -rf {html,vendor}
