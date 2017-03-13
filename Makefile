@@ -59,6 +59,8 @@ phpcs: drupal_cs
               --report=full \
               --colors \
               --ignore=/var/www/html/profiles/od/modules/custom/od_test \
+              --ignore=*.css \
+              --ignore=/var/www/html/modules/custom/wxt_library \
               /var/www/html/modules/custom \
               /var/www/html/profiles/od/modules/custom \
               /var/www/html/themes/custom \

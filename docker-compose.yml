@@ -37,6 +37,19 @@ services:
     container_name: siteopendata_db
     command: mysqld --max_allowed_packet=32M
 
+  postgres:
+    image: postgres:9.5-alpine
+    environment:
+      - POSTGRES_DB=od
+      - POSTGRES_USER=od
+      - POSTGRES_PASSWORD=od
+    volumes:
+      - db_data:/var/lib/postgresql
+      - ./files_private/od:/database/
+    ports:
+      - "5432:5432"
+    container_name: siteopendata_postgres
+
   consul:
     image: consul
     ports:
