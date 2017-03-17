@@ -31,7 +31,7 @@
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "cweagans/composer-patches": "^1.6.0",
         "drush/drush": "8.*@stable",
-        "drupalwxt/drupal-scaffold-docker": "dev-master",
+        "drupalwxt/drupal-scaffold-docker": "8.x-dev",
         "open-data/od": "dev-8.x-2.x"
     },
     "repositories": [
