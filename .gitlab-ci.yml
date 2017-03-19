@@ -9,10 +9,10 @@ variables:
 # cache:
 #   untracked: true
 
-image: drupalwxt/gitlab-ci
+image: sylus/gitlab-ci
 
 services:
-  - drupalwxt/gitlab-ci:dind
+  - sylus/gitlab-ci:dind
 
 # 2x performance boost as vfs in dind is slow
 # https://docs.docker.com/engine/userguide/storagedriver/overlayfs-driver/
