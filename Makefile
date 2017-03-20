@@ -81,7 +81,7 @@ phpunit:
                 --testsuite=unit \
                 --group wxt
 
-test: lint phpcs behat
+test: lint phpcs phpunit behat
 
 up:
 	docker-machine start default
