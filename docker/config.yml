@@ -2,4 +2,4 @@ docker:
     site: siteopendata_web
     volume: siteopendata_web
     network: siteopendata_default
-    behat_path: profiles/od/modules/custom/od_test/tests
+    behat_path: profiles/od/tests
