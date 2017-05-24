@@ -215,6 +215,9 @@
             "html/libraries/{$name}" : [
                 "type:drupal-library"
             ],
+            "html/libraries/fontawesome": [
+                "fortawesome/font-awesome"
+            ],
             "html/modules/custom/{$name}": [
                 "drupal/wxt_library"
             ],
