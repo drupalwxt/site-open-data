@@ -131,34 +131,4 @@ class ScriptHandler {
     }
   }
 
-  /**
-   * Post create project script.
-   *
-   * @param \Composer\Script\Event $event
-   *   The script event.
-   */
-  public static function postCreateProject(Event $event) {
-    $composer = $event->getComposer();
-    $composerFile = Factory::getComposerFile();
-    $io = $event->getIO();
-    $name = $composer->getPackage()->getName();
-
-    $projDir = realpath(dirname($composerFile));
-    $projectName = $io->ask('Enter composer project name (drupalwxt/site-wxt): ', 'drupalwxt/site-wxt');
-
-    $finder = new Finder();
-    foreach ($finder->files()->name('/composer\.(json|lock)/i')->in($projDir) as $file) {
-      if (!empty($projectName)) {
-        $file_contents = str_replace("$name", $projectName, $file->getContents());
-        file_put_contents($file->getRealPath(), $file_contents);
-        // reset the project name via reflection.
-        $package = $composer->getPackage();
-        $refl = new \ReflectionProperty(get_class($package), 'name');
-        $refl->setAccessible(true);
-        $refl->setValue($package, $projectName);
-      }
-    }
-
-  }
-
 }

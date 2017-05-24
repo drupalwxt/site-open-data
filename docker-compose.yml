@@ -109,7 +109,7 @@ services:
     container_name: siteopendata_mailhog
 
   solr:
-    image: solr:5-alpine
+    image: solr:6-alpine
     hostname: solr
     ports:
       - "8983:8983"
