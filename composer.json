@@ -53,17 +53,12 @@
         {
             "type"    : "package",
             "package" : {
-                "name"    : "harvesthq/chosen",
-                "version" : "v1.5.1",
-                "type"    : "drupal-library",
-                "dist"    : {
-                    "url"  : "https://github.com/harvesthq/chosen-package/archive/v1.5.1.tar.gz",
-                    "type" : "tar"
-                },
-                "source"  : {
-                    "url"       : "https://github.com/harvesthq/chosen-package.git",
-                    "type"      : "git",
-                    "reference" : "v1.5.1"
+                "name"     : "harvesthq/chosen",
+                "version"  : "v1.6.1",
+                "type"     : "drupal-library",
+                "dist"     : {
+                    "url"  : "https://github.com/harvesthq/chosen/releases/download/v1.6.1/chosen_v1.6.1.zip",
+                    "type" : "zip"
                 }
             }
         },
@@ -246,9 +241,9 @@
         }
     },
     "require": {
-        "composer/installers": "^1.0",
-        "drupal-composer/drupal-scaffold": "^2.0.0",
+        "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6.0",
+        "drupal-composer/drupal-scaffold": "^2.0.0",
         "drush/drush": "8.1.11",
         "drupal-composer-ext/drupal-scaffold-docker": "8.x-dev",
         "open-data/od": "dev-8.x-2.x"
