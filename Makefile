@@ -60,9 +60,10 @@ phpcs: drupal_cs
               --colors \
               --ignore=*.css \
               --ignore=*.md \
+              --ignore=/var/www/html/*/custom/*/*.info.yml \
               /var/www/html/profiles/od/modules/custom \
               /var/www/html/modules/custom \
-              /var/www/html/themes/custom \
+              /var/www/html/themes/custom
 
 	./docker/bin/phpcs --standard=/var/www/html/core/phpcs.xml \
               --extensions=php,module,inc,install,test,profile,theme \
