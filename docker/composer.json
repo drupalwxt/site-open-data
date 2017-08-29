@@ -276,7 +276,7 @@
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "drush/drush": "8.1.12",
         "drupal-composer-ext/drupal-scaffold-docker": "8.x-dev",
-        "open-data/od": "2.0.0-alpha1"
+        "open-data/od": "2.0.0-alpha2"
     },
     "autoload": {
         "classmap": [
