@@ -5,24 +5,8 @@ namespace Deployer;
 require 'recipe/drupal8.php';
 require 'vendor/deployer/recipes/slack.php';
 
-set('ssh_type', 'native');
-set('ssh_multiplexing', true);
 set('repository', 'https://github.com/open-data/site-open-data.git');
-set('env_vars', "HTTPS_PROXY=" . getenv('HTTPS_PROXY'));
-set('keep_releases', '15');
-
-# Override native deployer composer task for proxy support
-# TODO: Determine why isn't detected natively by Deployer.
-set('bin/composer', function () {
-    if (commandExist('composer')) {
-        $composer = run('which composer')->toString();
-    }
-    if (empty($composer)) {
-        run("source ~/.profile && cd {{release_path}} && curl -sS https://getcomposer.org/installer | /opt/rh/rh-php56/root/usr/bin/php");
-        $composer = "source ~/.profile && /opt/rh/rh-php56/root/usr/bin/php {{release_path}}/composer.phar";
-    }
-    return $composer;
-});
+set('keep_releases', '10');
 
 //Drupal 8 shared dirs
 set('shared_dirs', [
@@ -38,11 +22,26 @@ set('writable_dirs', [
     'html/sites/{{drupal_site}}/files',
 ]);
 
+set('bin/composer', function () {
+    if (commandExist('composer')) {
+        $composer = run('which composer')->toString();
+    }
+    if (empty($composer)) {
+        run("source ~/.profile && cd {{release_path}} && curl -sS https://getcomposer.org/installer | /opt/rh/rh-php70/root/usr/bin/php");
+        $composer = "source ~/.profile && /opt/rh/rh-php70/root/usr/bin/php {{release_path}}/composer.phar";
+    }
+    return $composer;
+});
+
 // Server
-server(getenv('PROJECT_NAME'), getenv('SSH_HOST'))
+host(getenv('SSH_CONFIG'))
     ->user(getenv('SSH_USER'))
-    ->identityFile()
-    ->forwardAgent()
+    ->port(22)
+    ->configFile('~/.ssh/config')
+    ->forwardAgent(true)
+    ->multiplexing(true)
+    ->addSshOption('UserKnownHostsFile', '/dev/null')
+    ->addSshOption('StrictHostKeyChecking', 'no')
     ->set('deploy_path', getenv('SSH_PATH'))
     ->stage('develop');
 
@@ -114,5 +113,3 @@ task('deploy:update_code', function () {
         run("source ~/.profile && cd {{release_path}} && $git checkout $revision");
     }
 });
-
-after('deploy','deploy:slack');

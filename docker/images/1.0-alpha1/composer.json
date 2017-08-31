@@ -24,7 +24,7 @@
         "pdepend/pdepend": "2.1.0",
         "sebastian/phpcpd": "*",
         "phpunit/phpunit": "~4.8",
-        "deployer/deployer": "^4.0",
+        "deployer/deployer": "^5.0",
         "deployer/recipes": "^4.0"
     },
     "config": {
