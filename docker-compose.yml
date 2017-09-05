@@ -20,7 +20,7 @@ services:
     volumes:
       - ./:/var/www
     depends_on:
-      - db
+      - postgres
     ports:
       - "9000"
     container_name: siteopendata_web
@@ -79,7 +79,7 @@ services:
     volumes:
       - ./:/var/www
     depends_on:
-     - db
+     - postgres
      - web
     container_name: siteopendata_cron
 
@@ -88,14 +88,14 @@ services:
     ports:
       - "4444:4444"
     depends_on:
-     - db
+     - postgres
      - web
     container_name: siteopendata_hub
 
   firefox:
     image: drupalcomposer/selenium:node-firefox
     depends_on:
-     - db
+     - postgres
      - web
      - hub
     container_name: siteopendata_firefox

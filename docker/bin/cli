@@ -53,7 +53,7 @@ drupal_install() {
 
   time drush si "${OPTION}" \
     --sites-subdir=default \
-    --db-url=mysql://root:root@db:3306/"${OPTION}" \
+    --db-url=pgsql://od:od@postgres:5432/"${OPTION}" \
     --account-name=admin \
     --account-pass=Drupal@2016 \
     --site-mail=admin@example.com \
