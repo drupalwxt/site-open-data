@@ -275,7 +275,7 @@
         "oomphinc/composer-installers-extender": "^1.1",
         "drupal-composer/drupal-scaffold": "^2.0.0",
         "drush/drush": "~8.0|^9.0.0-beta7",
-        "open-data/od": "dev-8.x-2.x"
+        "open-data/od": "dev-feat-content-moderation"
     },
     "autoload": {
         "classmap": [
