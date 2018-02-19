@@ -1,0 +1,66 @@
+stages:
+  - build
+  - package
+  - deploy
+
+variables:
+  PROJECT_NAME: open-data/site-open-data
+
+# cache:
+#   untracked: true
+
+image: sylus/gitlab-ci
+
+services:
+  - sylus/gitlab-ci:dind
+
+# 2x performance boost as vfs in dind is slow
+# https://docs.docker.com/engine/userguide/storagedriver/overlayfs-driver/
+# https://gitlab.com/gitlab-org/gitlab-ci-multi-runner/issues/1698#note_15746725
+# https://gitlab.com/gitlab-org/gitlab-ce/issues/17861#note_12991518
+variables:
+  DOCKER_DRIVER: overlay
+
+before_script:
+  # Docker configuration
+  - docker info
+  # Run ssh-agent (inside the build environment)
+  - eval $(ssh-agent -s)
+  # Add the SSH key stored in SSH_PRIVATE_KEY variable to the agent store
+  - echo "${SSH_PRIVATE_KEY}" | ssh-add -
+  # For Docker builds disable host key checking. Be aware that by adding that
+  # you are suspectible to man-in-the-middle attacks.
+  # WARNING: Use this only with the Docker executor, if you use it with shell
+  # you will overwrite your user's SSH config.
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+build_job:
+  stage: build
+  script:
+   - echo "Building ${PROJECT_NAME} test runner"
+   - composer install --prefer-dist --no-interaction
+   - export COMPOSE_HTTP_TIMEOUT=200
+   - make build
+   - docker-compose -f docker-compose-ci.yml up -d
+   - docker ps -a
+   - sleep 20
+   - make drupal_install
+   - make test
+
+# package_job:
+#   stage: package
+#   artifacts:
+#     name: "open-data-${CI_BUILD_REF_NAME}"
+#     when: on_success
+#     expire_in: 7 hrs 30 min
+
+deploy_release:
+  stage: deploy
+  script:
+    - composer install --prefer-dist --no-interaction
+    - ./vendor/bin/dep --file=./docker/deploy.php deploy develop
+  dependencies:
+    - build_job
+  only:
+    - /v[0-9].*$/

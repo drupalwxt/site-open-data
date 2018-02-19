@@ -1,0 +1,54 @@
+sudo: required
+
+addons:
+  artifacts:
+   # ...
+   paths:
+     - $(git ls-files -o | grep travis_artifacts | tr "\n" ":")
+
+language: php
+
+php:
+  - 7.0
+
+env:
+  DOCKER_COMPOSE_VERSION: 1.8.1
+
+services:
+  - docker
+
+before_install:
+  # Update docker engine for compose v2 support.
+  - sudo apt-get clean
+  - sudo apt-get update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - docker --version
+  # Let's stop postgresql
+  - sudo service postgresql stop
+  # wait for postgresql to shutdown
+  - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
+  # Disable xdebug.
+  - phpenv config-rm xdebug.ini
+  # Install Drupal.
+  - composer global require "hirak/prestissimo:^0.3"
+  - composer install --prefer-dist --no-interaction
+  # Update the docker-compose binary for compose v2 support.
+  - sudo rm /usr/local/bin/docker-compose || true
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - docker-compose --version
+  # Build out the Drupal infrastructure.
+  # make build can be avoided if leveraging Docker Hub.
+  - make build
+  - docker-compose -f docker-compose-ci.yml up -d
+  - docker ps -a
+  - sleep 10
+
+script:
+  - make drupal_install
+  - sudo make test
+
+notifications:
+  slack:
+    secure: BKZaX+B/sBnJVhIXeu1sKJ6Gf/E+IZrBQllc8eWK3tjse72AKiS+o68pGOhyMu027YRXCZHUZmJ9Q9ChLGSFMMyolWrEjo/ZCWnfVxbHDJzERYylp6H1gwXWI/ByGU5Vsl485U7LleMEXslodgsYnstKovwThh4k0a76TAZwyw2TWqV1Wq3HEdwizRArucRPJbw6pr1OCKI7c0zlDN4h88UcML9Cbmf0mrrqcgv+lpUs1EdnyO1KyFfoMXTHTwGz0kh/SZwG7VBvDbhuuJNAZPA2ZLM14sj4JAhre8/2ng6O0px4NRsD5ZgJhvDY8ZZM/cq7VMbo6RlXTUeoZRCQHM4ORlbqafu5QxOkieEt1rfiOJxfhHjAXvvI0mpEv+vcDLX243krNP74dkaSZpsncxsReTRC9A3dRp91dfNxUXZ256D3bGztjP3Xy2CcGfvkHTNCJFM/Sdikbx/GKHD//z25PqRPniGHMNUXZu5VsL/tmy6zilTcGx/6SfZ/rtNp5a8oa3erkfg8dTYOUlqjM/pHXwM0Yt0wKRp2nZ5UK5GVGL9iAnPXDWIGXmalcIpgPulDWvU+Z1RIB20/emyufUTYdUH39xjiQDgAL7+2hyANsP310qPBEijNLhkl+h+vbFJJSBR008lC33GVc3Wm7w7Pf19hfDOLuozpgDoOyJA=

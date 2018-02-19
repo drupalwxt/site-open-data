@@ -1,12 +1,22 @@
-Drupal Composer Project for open.canada.ca
-==========================================
+Composer Project for Open Data
+==============================
 
-Codebase for fresh install of Drupal 8.x for open.canada.ca.
+[![Build Status][ci-badge]][ci]
+
+Drupal WxT codebase for `Open Data`.
 
 ## Requirements
 
 * [Composer][composer]
 * [Node][node]
+
+## Docker Support via `drupal-scaffold-docker`
+
+This project makes use of the `drupal-scaffold-docker` plugin for automatically
+downloading and instantiating a Docker based Drupal infrastructure.
+
+- [README.md][docker-scaffold-readme]
+- [template/docker/README.md][docker-readme]
 
 ## Maintenance
 
@@ -20,5 +30,10 @@ List of common commands are as follows:
 | Updating a single contributed project           | ```composer update drupal/PROJECT_NAME```              |
 | Updating Drupal Core exclusively                | ```composer update drupal/core```                      |
 
+
+[ci]:                       https://travis-ci.org/open-data/site-open-data
+[ci-badge]:                 https://travis-ci.org/open-data/site-open-data.svg?branch=8.x
 [composer]:                 https://getcomposer.org
 [node]:                     https://nodejs.org
+[docker-scaffold-readme]:   https://github.com/drupal-composer-ext/drupal-scaffold-docker/blob/master/README.md
+[docker-readme]:            https://github.com/drupal-composer-ext/drupal-scaffold-docker/blob/master/template/docker/README.md
