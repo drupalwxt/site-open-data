@@ -262,6 +262,8 @@
             ]
         },
         "enable-patching": true,
+        "patches": {
+        }
     },
     "require": {
         "composer/installers": "^1.2",
